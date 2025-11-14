@@ -23,6 +23,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Autonomous(name = "BlueRight", group = "Autonomous")
 public class BlueRight extends LinearOpMode {
     public class arm {
+        public Action Armdown;
         private DcMotor arm;
 
         public arm(HardwareMap hardwareMap) {
@@ -51,8 +52,16 @@ public class BlueRight extends LinearOpMode {
         }
     }
 
+    public class ArmdownOpMode extends LinearOpMode {
+        @Override
+        public void runOpMode() throws InterruptedException {
+            arm Arm = new arm(hardwareMap);
 
+            waitForStart();
 
+            Actions.runBlocking(Arm.Armdown);
+        }
+    }
 
     public void runOpMode() {
         Pose2d initialPose = new Pose2d(11.8, 61.7, Math.toRadians(90));
