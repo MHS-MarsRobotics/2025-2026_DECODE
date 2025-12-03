@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.auto;
 
 import androidx.annotation.NonNull;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
@@ -13,15 +14,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
-
 @Config
-@Autonomous(name = "BlueRight", group = "Autonomous")
-public class BlueRight extends LinearOpMode {
+@Autonomous(name = "RedFar", group = "Autonomous")
+public class RedFar extends LinearOpMode {
     public class arm {
         public Action Armdown;
         private DcMotor arm;
@@ -52,34 +51,22 @@ public class BlueRight extends LinearOpMode {
         }
     }
 
-    public class ArmdownOpMode extends LinearOpMode {
-        @Override
-        public void runOpMode() throws InterruptedException {
-            arm Arm = new arm(hardwareMap);
 
-            waitForStart();
-
-            Actions.runBlocking(Arm.Armdown);
-        }
-    }
 
     public void runOpMode() {
-        Pose2d initialPose = new Pose2d(11.8, 61.7, Math.toRadians(90));
+        Pose2d initialPose = new Pose2d( 61.3,14.4, Math.toRadians(180));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
+        arm arm = new arm(hardwareMap);
+
         // vision here that outputs position
         int visionOutputPosition = 1;
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .lineToYSplineHeading(33, Math.toRadians(0))
-                .waitSeconds(2)
-                .setTangent(Math.toRadians(90))
-                .lineToY(48)
-                .setTangent(Math.toRadians(0))
-                .lineToX(32)
-                .strafeTo(new Vector2d(44.5, 30))
-                .turn(Math.toRadians(180))
-                .lineToX(47.5)
-                .waitSeconds(3);
+                .splineTo(new Vector2d(-47, 49), Math.toRadians(135));
+
+
+        TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
+                .strafeToLinearHeading(new Vector2d(-52,8),Math.toRadians(90));
 
         waitForStart();
 
@@ -89,8 +76,19 @@ public class BlueRight extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
+                        tab1.build()
+                )
+        );
 
+        Actions.runBlocking(
+                new SequentialAction(
+                        arm.Armdown()
+                )
+        );
 
+        Actions.runBlocking(
+                new SequentialAction(
+                        tab2.build()
                 )
         );
     }

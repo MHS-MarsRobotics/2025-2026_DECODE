@@ -43,7 +43,7 @@ public class FieldCentricDrive extends LinearOpMode {
 
         if (isStopRequested()) return;
         while (opModeIsActive()) {
-            double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
+            double y =  gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x;
             double rx = -gamepad1.right_stick_x;
 
@@ -82,7 +82,12 @@ public class FieldCentricDrive extends LinearOpMode {
             else {
                 arm.setPower(0);
             }
-
+            if (gamepad1.right_trigger >0) {
+                Motor_Front_Left.setPower(frontLeftPower / 2);
+                Motor_Front_Right.setPower(frontRightPower / 2);
+                Motor_Back_Left.setPower(backLeftPower / 2);
+                Motor_Back_Right.setPower(backRightPower / 2);
+            }
             //
 
         }
