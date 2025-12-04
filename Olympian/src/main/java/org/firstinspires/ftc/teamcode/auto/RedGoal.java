@@ -19,7 +19,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 @Config
-@Autonomous(name = "REDGOAL", group = "Autonomous")
+@Autonomous(name = "RedGoal", group = "Autonomous")
 public class RedGoal extends LinearOpMode {
     public class arm {
         public Action Armdown;
