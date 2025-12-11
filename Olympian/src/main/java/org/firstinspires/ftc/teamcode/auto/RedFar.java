@@ -37,12 +37,12 @@ public class RedFar extends LinearOpMode {
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
                     arm.setPower(-0.8);
-                    sleep(3000);
+                    sleep(1500);
                     arm.setPower(0);
                     initialized = true;
                 }
 
-                return arm.isBusy();
+                return false;
             }
         }
 
@@ -62,11 +62,12 @@ public class RedFar extends LinearOpMode {
         int visionOutputPosition = 1;
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .splineTo(new Vector2d(-47, 49), Math.toRadians(135));
+                .splineTo(new Vector2d(-65, 53), Math.toRadians(127.29));
 
 
-        TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-                .strafeToLinearHeading(new Vector2d(-52,8),Math.toRadians(90));
+        Action tab2 = tab1.endTrajectory().fresh()
+                .strafeToLinearHeading(new Vector2d(-90,8),Math.toRadians(90))
+                .build();
 
         waitForStart();
 
@@ -76,19 +77,9 @@ public class RedFar extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        tab1.build()
-                )
-        );
-
-        Actions.runBlocking(
-                new SequentialAction(
-                        arm.Armdown()
-                )
-        );
-
-        Actions.runBlocking(
-                new SequentialAction(
-                        tab2.build()
+                        tab1.build(),
+                        arm.Armdown(),
+                        tab2
                 )
         );
     }

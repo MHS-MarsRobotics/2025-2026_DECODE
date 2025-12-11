@@ -102,7 +102,7 @@ public class FieldCentricDrive extends LinearOpMode {
                 //or change mode with servo programmer
                 //make sure to commit and push then load this into the laptops
                 //dm if anything else needed will be driving though
-                Launcher.setPower(2);
+                Launcher.setPower(1);
             }
 
             //idk how its set up or how the reset is on the launcher but 0 power for now if it t reset keep going forward or go backwards

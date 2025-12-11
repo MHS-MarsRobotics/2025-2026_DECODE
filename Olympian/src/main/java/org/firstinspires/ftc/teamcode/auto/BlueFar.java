@@ -24,6 +24,9 @@ public class BlueFar extends LinearOpMode {
         public Action Armdown;
         private DcMotor arm;
 
+
+
+
         public arm(HardwareMap hardwareMap) {
             arm = hardwareMap.get(DcMotorEx.class, "arm");
             arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -36,12 +39,12 @@ public class BlueFar extends LinearOpMode {
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
                     arm.setPower(-0.8);
-                    sleep(3000);
+                    sleep(1500);
                     arm.setPower(0);
                     initialized = true;
                 }
 
-                return arm.isBusy();
+                return false;
             }
         }
 
@@ -61,14 +64,12 @@ public class BlueFar extends LinearOpMode {
         int visionOutputPosition = 1;
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .splineTo(new Vector2d(-47, -49), Math.toRadians(225));
+                .splineTo(new Vector2d(-65, -53), Math.toRadians(225));
 
 
-        TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-                .strafeToLinearHeading(new Vector2d(-52,-8),Math.toRadians(270))
-
-                
-                .waitSeconds(3);
+        Action tab2 = tab1.endTrajectory().fresh()
+                .strafeToLinearHeading(new Vector2d(-90,-8),Math.toRadians(270))
+                .build();
 
         waitForStart();
 
@@ -78,19 +79,9 @@ public class BlueFar extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        tab1.build()
-                )
-        );
-
-        Actions.runBlocking(
-                new SequentialAction(
-                        arm.Armdown()
-                )
-        );
-
-        Actions.runBlocking(
-                new SequentialAction(
-                        tab2.build()
+                        tab1.build(),
+                        arm.Armdown(),
+                        tab2
                 )
         );
     }

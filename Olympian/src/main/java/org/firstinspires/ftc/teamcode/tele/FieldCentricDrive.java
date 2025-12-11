@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.tele;
 
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -7,6 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.MecanumDrive;
+import org.firstinspires.ftc.teamcode.PinpointLocalizer;
 
 @TeleOp(name="Field Drive")
 public class FieldCentricDrive extends LinearOpMode {
@@ -18,7 +21,6 @@ public class FieldCentricDrive extends LinearOpMode {
         DcMotor Motor_Back_Left = hardwareMap.dcMotor.get(  "Motor Back Left"   );
         DcMotor Motor_Back_Right = hardwareMap.dcMotor.get( "Motor Back Right"  );
         DcMotor arm = hardwareMap.dcMotor.get("arm");
-
 
 
 
@@ -79,6 +81,9 @@ public class FieldCentricDrive extends LinearOpMode {
             if (gamepad2.a){
                 arm.setPower(-0.75);
             }
+            else if (gamepad2.x){
+                arm.setPower(0.75);
+            }
             else {
                 arm.setPower(0);
             }
@@ -88,7 +93,12 @@ public class FieldCentricDrive extends LinearOpMode {
                 Motor_Back_Left.setPower(backLeftPower / 2);
                 Motor_Back_Right.setPower(backRightPower / 2);
             }
-            //
+            if (gamepad1.right_bumper) {
+                Motor_Front_Left.setPower(frontLeftPower / 4);
+                Motor_Front_Right.setPower(frontRightPower / 4);
+                Motor_Back_Left.setPower(backLeftPower / 4);
+                Motor_Back_Right.setPower(backRightPower / 4);
+            }
 
         }
     }

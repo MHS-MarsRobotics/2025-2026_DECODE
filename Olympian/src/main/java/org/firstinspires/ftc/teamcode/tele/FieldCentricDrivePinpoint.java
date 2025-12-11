@@ -26,50 +26,49 @@ public class FieldCentricDrivePinpoint extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
-            Pose2d currentPose = drive.localizer.getPose();
-            double botHeading = currentPose.heading.toDouble();
 
-            double y = -gamepad1.left_stick_y;
-            double x = gamepad1.left_stick_x;
-            double rx = gamepad1.right_stick_x;
 
-            // Reset heading on a button press
-            if (gamepad1.options) {
-                drive.localizer.setPose(new Pose2d(currentPose.position, 0));
+            double speedMultiplier = 1.0;
+
+            if (gamepad1.right_trigger >0) {
+                speedMultiplier = 0.5;
+            }
+            if (gamepad1.right_bumper) {
+                speedMultiplier = 0.25;
             }
 
+            drive.updatePoseEstimate();
 
-            double inputX = y;
-            double inputY = x;
-
-            double rotationAngle = -botHeading;
-
-            double rotatedX = inputX * Math.cos(rotationAngle) - inputY * Math.sin(rotationAngle);
-            double rotatedY = inputX * Math.sin(rotationAngle) + inputY * Math.cos(rotationAngle);
-
-            Vector2d driveVector = new Vector2d(rotatedX, rotatedY);
-
-            drive.setDrivePowers(
-                    new PoseVelocity2d(
-                            driveVector,
-                            rx
-                    )
-            );
+            drive.setDrivePowers(new PoseVelocity2d(
+                    new Vector2d(
+                            -gamepad1.left_stick_y * speedMultiplier,
+                            -gamepad1.left_stick_x * speedMultiplier
+                    ),
+                    -gamepad1.right_stick_x * speedMultiplier
+            ));
 
             if (gamepad2.a){
                 arm.setPower(-0.75);
+            }
+            else if (gamepad2.x){
+                arm.setPower(0.75);
             }
             else {
                 arm.setPower(0);
             }
 
             // CRITICAL: Update the localizer's position estimate in every loop
-            drive.updatePoseEstimate();
+
+
+            Pose2d currentPose = drive.localizer.getPose();
 
             // Optional: Telemetry
-            telemetry.addData("X Position", currentPose.position.x);
-            telemetry.addData("Y Position", currentPose.position.y);
-            telemetry.addData("Heading (degrees)", Math.toDegrees(botHeading));
+            telemetry.addData("x", currentPose.position.x);
+            telemetry.addData("y", currentPose.position.y);
+
+            // Convert radians to degrees for easier reading
+            telemetry.addData("heading (deg)", Math.toDegrees(currentPose.heading.toDouble()));
+
             telemetry.update();
         }
     }

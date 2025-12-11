@@ -19,8 +19,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 @Config
-@Autonomous(name = "BlueGoal", group = "Autonomous")
-public class BlueGoal extends LinearOpMode {
+@Autonomous(name = "delayRedFar", group = "Autonomous")
+public class delayRedFar extends LinearOpMode {
     public class arm {
         public Action Armdown;
         private DcMotor arm;
@@ -54,18 +54,20 @@ public class BlueGoal extends LinearOpMode {
 
 
     public void runOpMode() {
-        Pose2d initialPose = new Pose2d( -56.8285,-64.0119, Math.toRadians(236));
+        Pose2d initialPose = new Pose2d( 61.3,14.4, Math.toRadians(180));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         arm arm = new arm(hardwareMap);
 
         // vision here that outputs position
+        int visionOutputPosition = 1;
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .strafeTo(new Vector2d(-51,-58));
+                .waitSeconds(10)
+                .splineTo(new Vector2d(-65, 53), Math.toRadians(127.29));
 
 
         Action tab2 = tab1.endTrajectory().fresh()
-                .strafeToLinearHeading(new Vector2d(-70,-5),Math.toRadians(270))
+                .strafeToLinearHeading(new Vector2d(-90,8),Math.toRadians(90))
                 .build();
 
         waitForStart();
@@ -79,10 +81,7 @@ public class BlueGoal extends LinearOpMode {
                         tab1.build(),
                         arm.Armdown(),
                         tab2
-
                 )
         );
-
-
     }
 }

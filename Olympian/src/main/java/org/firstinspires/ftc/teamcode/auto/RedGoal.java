@@ -42,7 +42,7 @@ public class RedGoal extends LinearOpMode {
                     initialized = true;
                 }
 
-                return arm.isBusy();
+                return false;
             }
         }
 
@@ -54,18 +54,19 @@ public class RedGoal extends LinearOpMode {
 
 
     public void runOpMode() {
-        Pose2d initialPose = new Pose2d( -50,50, Math.toRadians(135));
+        Pose2d initialPose = new Pose2d( -63.2116,63.9509, Math.toRadians(131));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         arm arm = new arm(hardwareMap);
 
         // vision here that outputs position
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .strafeTo(new Vector2d(-45,40));
+                .strafeTo(new Vector2d(-53,54));
 
 
-        TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-                .strafeToLinearHeading(new Vector2d(-60,5),Math.toRadians(90));
+        Action tab2 = tab1.endTrajectory().fresh()
+                .strafeToLinearHeading(new Vector2d(-70,5),Math.toRadians(90))
+                .build();
 
 
         waitForStart();
@@ -76,19 +77,9 @@ public class RedGoal extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        tab1.build()
-                )
-        );
-
-        Actions.runBlocking(
-                new SequentialAction(
-                        arm.Armdown()
-                )
-        );
-
-        Actions.runBlocking(
-                new SequentialAction(
-                        tab2.build()
+                        tab1.build(),
+                        arm.Armdown(),
+                        tab2
                 )
         );
     }
