@@ -9,6 +9,7 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 // Import your own MecanumDrive class
 import org.firstinspires.ftc.teamcode.MecanumDrive;
@@ -20,6 +21,11 @@ public class FieldCentricDrivePinpoint extends LinearOpMode {
         // Initialize the MecanumDrive class, which handles all hardware setup
         MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
         DcMotor arm = hardwareMap.dcMotor.get("arm");
+        Servo intake_0 = hardwareMap.servo.get("intake_0");
+        Servo intake_1 = hardwareMap.servo.get("intake_1");
+
+        // Wait for the start button to be pressed
+
 
         waitForStart();
 
@@ -56,6 +62,21 @@ public class FieldCentricDrivePinpoint extends LinearOpMode {
             else {
                 arm.setPower(0);
             }
+
+            if (gamepad2.dpad_up){
+                intake_0.setPosition(0.7);
+                intake_1.setPosition(0.3);
+            }
+             if (gamepad2.dpad_right){
+                intake_0.setPosition(0.55);
+                intake_1.setPosition(0.45);
+            }
+             if (gamepad2.dpad_down){
+                intake_0.setPosition(0.3);
+                intake_1.setPosition(0.7);
+            }
+
+
 
             // CRITICAL: Update the localizer's position estimate in every loop
 

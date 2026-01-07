@@ -7,13 +7,11 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-@TeleOp(name=" op Field Drive")
-public class FieldCentricDrive extends LinearOpMode {
+@TeleOp(name="Field Drive")
+public class Main_FieldCentricDrive extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -21,8 +19,8 @@ public class FieldCentricDrive extends LinearOpMode {
         DcMotor Motor_Front_Right = hardwareMap.dcMotor.get("Motor Front Right" );
         DcMotor Motor_Back_Left = hardwareMap.dcMotor.get(  "Motor Back Left"   );
         DcMotor Motor_Back_Right = hardwareMap.dcMotor.get( "Motor Back Right"  );
-        Servo Cylinder  = hardwareMap.servo.get("Cylinder");
-        //DcMotor Launcher  = hardwareMap.dcMotor.get("launch");
+       // CRServo Cylinder  = hardwareMap.crservo.get("Cylinder");
+        DcMotor Launcher  = hardwareMap.dcMotor.get("launch");
 
 
         //Will they get it done in time
@@ -36,7 +34,6 @@ public class FieldCentricDrive extends LinearOpMode {
         Motor_Back_Left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Motor_Front_Right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Motor_Back_Right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
 
         // Retrieve the IMU from the hardware map
         IMU imu = hardwareMap.get(IMU.class, "imu");
@@ -84,33 +81,24 @@ public class FieldCentricDrive extends LinearOpMode {
             Motor_Back_Left.setPower(backLeftPower);
             Motor_Back_Right.setPower(backRightPower);
 
-            if (gamepad2.x){
+     //       if (gamepad2.a){
+     //           Cylinder.setDirection(DcMotorSimple.Direction.FORWARD);
+     //           Cylinder.setPower(1);
+     //       }
+     //       if (gamepad2.x){
+     //           Cylinder.setPower(-1);
+     //       }
 
-                Cylinder.setPosition(0.04);
+
+            if (gamepad2.right_trigger > 0.5){
+                Launcher.setPower(1);
             }
-             if (gamepad2.a){
-                Cylinder.setPosition(0.11);
+            else if (gamepad2.left_trigger > 0.5){
+                Launcher.setPower(-1);
             }
-             if (gamepad2.b){
-                Cylinder.setPosition(0.185);
-
+            else {
+                Launcher.setPower(0);
             }
-
-            //0.03  0.1
-
-            telemetry.addData("Cylinder Position", Cylinder.getPosition());
-            telemetry.update();
-
-
-      //     if (gamepad2.right_trigger > 0.5){
-      //         Launcher.setPower(1);
-      //     }
-      //     else if (gamepad2.left_trigger > 0.5){
-      //         Launcher.setPower(-1);
-      //     }
-      //     else {
-      //         Launcher.setPower(0);
-      //     }
 
 
         }
