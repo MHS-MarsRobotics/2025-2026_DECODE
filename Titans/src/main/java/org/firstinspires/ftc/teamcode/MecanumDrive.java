@@ -226,7 +226,7 @@ public final class MecanumDrive {
         rightFront = hardwareMap.get(DcMotorEx.class,     "Motor Front Right");
         leftBack = hardwareMap.get(DcMotorEx.class,    "Motor Back Left"  );
         rightBack = hardwareMap.get(DcMotorEx.class,   "Motor Back Right" );
-        DcMotor arm = hardwareMap.dcMotor.get("arm");
+
 
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

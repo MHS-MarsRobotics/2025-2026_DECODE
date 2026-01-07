@@ -19,8 +19,8 @@ public class FieldCentricDrive extends LinearOpMode {
         DcMotor Motor_Front_Right = hardwareMap.dcMotor.get("Motor Front Right" );
         DcMotor Motor_Back_Left = hardwareMap.dcMotor.get(  "Motor Back Left"   );
         DcMotor Motor_Back_Right = hardwareMap.dcMotor.get( "Motor Back Right"  );
-        CRServo Cylinder  = hardwareMap.crservo.get("Cylinder");
-        CRServo Launcher  = hardwareMap.crservo.get("launch");
+       // CRServo Cylinder  = hardwareMap.crservo.get("Cylinder");
+        DcMotor Launcher  = hardwareMap.dcMotor.get("launch");
 
 
         //Will they get it done in time
@@ -39,8 +39,8 @@ public class FieldCentricDrive extends LinearOpMode {
         IMU imu = hardwareMap.get(IMU.class, "imu");
         // Adjust the orientation parameters to match your robot
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
-                RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
+                RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
 
@@ -49,7 +49,7 @@ public class FieldCentricDrive extends LinearOpMode {
         if (isStopRequested()) return;
         while (opModeIsActive()) {
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-            double x = gamepad1.left_stick_x;
+            double x = -gamepad1.left_stick_x;
             double rx = -gamepad1.right_stick_x;
 
             // This button choice was made so that it is hard to hit on accident,
@@ -59,7 +59,7 @@ public class FieldCentricDrive extends LinearOpMode {
                 imu.resetYaw();
             }
 
-            double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+            double botHeading = -imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
             // Rotate the movement direction counter to the bot's rotation
             double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
@@ -81,35 +81,25 @@ public class FieldCentricDrive extends LinearOpMode {
             Motor_Back_Left.setPower(backLeftPower);
             Motor_Back_Right.setPower(backRightPower);
 
-            if (gamepad2.a){
-                Cylinder.setDirection(DcMotorSimple.Direction.FORWARD);
-                Cylinder.setPower(1);
-            }
-            if (gamepad2.x){
-                Cylinder.setPower(-1);
-            }
+     //       if (gamepad2.a){
+     //           Cylinder.setDirection(DcMotorSimple.Direction.FORWARD);
+     //           Cylinder.setPower(1);
+     //       }
+     //       if (gamepad2.x){
+     //           Cylinder.setPower(-1);
+     //       }
 
-            //what button for launcher
-            //this is the outline gamepad 2 is gunner gamepad 1 is driver gamepad
-            //gamepad2.(button they are wanting to use)
+
             if (gamepad2.right_trigger > 0.5){
-                //negative if runs wrong way
-                //tune as needed
-                //this project
-                //check limits
-                //or change mode with servo programmer
-                //make sure to commit and push then load this into the laptops
-                //dm if anything else needed will be driving though
                 Launcher.setPower(1);
             }
-
-            //idk how its set up or how the reset is on the launcher but 0 power for now if it t reset keep going forward or go backwards
-            if (gamepad2.right_trigger < 0.5){
+            else if (gamepad2.left_trigger > 0.5){
+                Launcher.setPower(-1);
+            }
+            else {
                 Launcher.setPower(0);
             }
 
-           // if(gamepad1.right_trigger > 0.1){
-            //}
 
         }
     }
