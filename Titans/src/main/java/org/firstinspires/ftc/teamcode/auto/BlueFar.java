@@ -54,7 +54,7 @@ public class BlueFar extends LinearOpMode {
 
 
     public void runOpMode() {
-        Pose2d initialPose = new Pose2d( 61.3,-14.4, Math.toRadians(180));
+        Pose2d initialPose = new Pose2d( 59,-12, Math.toRadians(180));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         arm arm = new arm(hardwareMap);
 
@@ -62,11 +62,12 @@ public class BlueFar extends LinearOpMode {
         int visionOutputPosition = 1;
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .splineTo(new Vector2d(-47, -49), Math.toRadians(225));
+                .splineTo(new Vector2d(-36, -36), Math.toRadians(225));
 
 
         TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-                .strafeToLinearHeading(new Vector2d(-52,-8),Math.toRadians(270))
+                .turnTo(Math.toRadians(90))
+                .lineToY(-55)
 
                 
                 .waitSeconds(3);

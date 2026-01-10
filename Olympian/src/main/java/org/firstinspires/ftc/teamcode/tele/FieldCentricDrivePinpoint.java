@@ -24,6 +24,7 @@ public class FieldCentricDrivePinpoint extends LinearOpMode {
         Servo intake_0 = hardwareMap.servo.get("intake_0");
         Servo intake_1 = hardwareMap.servo.get("intake_1");
 
+
         // Wait for the start button to be pressed
 
 
@@ -57,7 +58,7 @@ public class FieldCentricDrivePinpoint extends LinearOpMode {
                 arm.setPower(-0.75);
             }
             else if (gamepad2.x){
-                arm.setPower(0.75);
+                arm.setPower(0.55);
             }
             else {
                 arm.setPower(0);
@@ -75,6 +76,8 @@ public class FieldCentricDrivePinpoint extends LinearOpMode {
                 intake_0.setPosition(0.3);
                 intake_1.setPosition(0.7);
             }
+
+
 
 
 

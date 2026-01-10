@@ -76,13 +76,13 @@ public class BlueGoal extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        tab1.build()
+                        arm.Armdown()
                 )
         );
 
         Actions.runBlocking(
                 new SequentialAction(
-                        arm.Armdown()
+                        tab1.build()
                 )
         );
 

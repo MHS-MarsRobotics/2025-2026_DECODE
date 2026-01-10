@@ -61,11 +61,11 @@ public class RedGoal extends LinearOpMode {
         // vision here that outputs position
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .strafeTo(new Vector2d(-45,40));
+                .strafeTo(new Vector2d(-47,49));
 
 
         TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-                .strafeToLinearHeading(new Vector2d(-60,5),Math.toRadians(90));
+                .strafeToLinearHeading(new Vector2d(-52,8),Math.toRadians(90));
 
 
         waitForStart();
@@ -76,13 +76,13 @@ public class RedGoal extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        tab1.build()
+                        arm.Armdown()
                 )
         );
 
         Actions.runBlocking(
                 new SequentialAction(
-                        arm.Armdown()
+                        tab1.build()
                 )
         );
 
