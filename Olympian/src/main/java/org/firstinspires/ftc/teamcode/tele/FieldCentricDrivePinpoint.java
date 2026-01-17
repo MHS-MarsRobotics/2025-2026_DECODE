@@ -69,8 +69,8 @@ public class FieldCentricDrivePinpoint extends LinearOpMode {
                 intake_1.setPosition(0.3);
             }
              if (gamepad2.dpad_right){
-                intake_0.setPosition(0.55);
-                intake_1.setPosition(0.45);
+                intake_0.setPosition(0.6);
+                intake_1.setPosition(0.4);
             }
              if (gamepad2.dpad_down){
                 intake_0.setPosition(0.3);
