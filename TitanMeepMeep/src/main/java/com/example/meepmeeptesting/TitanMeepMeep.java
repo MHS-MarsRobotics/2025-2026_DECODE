@@ -29,21 +29,21 @@ public class TitanMeepMeep {
                 .build();
 
        // Drive to Blue Goal
-        myBotToBlueGoal.runAction(myBotToBlueGoal.getDrive().actionBuilder(new Pose2d(59, -12, Math.toRadians(180)))
+        myBotToBlueGoal.runAction(myBotToBlueGoal.getDrive().actionBuilder(new Pose2d(63, -12, Math.toRadians(180)))
                         .waitSeconds(1)
-                        .splineTo(new Vector2d(-36, -36 ), Math.toRadians(225))
+                .strafeToLinearHeading(new Vector2d(47,-12),Math.toRadians(90))
+                        .splineTo(new Vector2d(-24, -24 ), Math.toRadians(225))
                         .waitSeconds(1)
-                        .turnTo(Math.toRadians(90))
-                        .lineToY(-55)
+                        .strafeToLinearHeading(new Vector2d(-63.4,-8),Math.toRadians(270))
                 .build());
 
         // Drive to Red Goal
-        myBotToRedGoal.runAction(myBotToRedGoal.getDrive().actionBuilder(new Pose2d(59, 12, Math.toRadians(180)))
+        myBotToRedGoal.runAction(myBotToRedGoal.getDrive().actionBuilder(new Pose2d(63, 12, Math.toRadians(180)))
                 .waitSeconds(1)
-                .splineTo(new Vector2d(-36, 36), Math.toRadians(135))
+                .strafeToLinearHeading(new Vector2d(47,12),Math.toRadians(90))
+                .splineTo(new Vector2d(-24, 24), Math.toRadians(135))
                 .waitSeconds(1)
-                .turnTo(Math.toRadians(270))
-                .lineToY(55)
+                .strafeToLinearHeading(new Vector2d(-63.4,8),Math.toRadians(90))
                 .build());
 
 
@@ -65,13 +65,13 @@ public class TitanMeepMeep {
 
         // Drive to Blue Goal
         TitanToBlueGoal.runAction(TitanToBlueGoal.getDrive().actionBuilder(new Pose2d(-50, -50, Math.toRadians(225)))
-                .strafeTo(new Vector2d(-47,-49))
-                .strafeToLinearHeading(new Vector2d(-52,-8),Math.toRadians(270))
+                .strafeTo(new Vector2d(-24,-24))
+                .strafeToLinearHeading(new Vector2d(-63.4,-8),Math.toRadians(270))
                 .build());
 
         TitanToRedGoal.runAction(TitanToRedGoal.getDrive().actionBuilder(new Pose2d(-50, 50, Math.toRadians(135)))
-                .strafeTo(new Vector2d(-47,49))
-                .strafeToLinearHeading(new Vector2d(-52,8),Math.toRadians(90))
+                .strafeTo(new Vector2d(-24,24))
+                .strafeToLinearHeading(new Vector2d(-63.4,8),Math.toRadians(90))
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_DECODE_JUICE_DARK)
