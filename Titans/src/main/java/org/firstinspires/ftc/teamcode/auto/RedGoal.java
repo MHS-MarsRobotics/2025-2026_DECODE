@@ -54,7 +54,7 @@ public class RedGoal extends LinearOpMode {
 
 
     public void runOpMode() {
-        Pose2d initialPose = new Pose2d( -50,50, Math.toRadians(135));
+        Pose2d initialPose = new Pose2d( -50,50, Math.toRadians(129));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         arm arm = new arm(hardwareMap);
 

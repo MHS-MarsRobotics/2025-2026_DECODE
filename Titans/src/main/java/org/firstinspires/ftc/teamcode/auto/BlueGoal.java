@@ -54,7 +54,7 @@ public class BlueGoal extends LinearOpMode {
 
 
     public void runOpMode() {
-        Pose2d initialPose = new Pose2d( -50,-50, Math.toRadians(225));
+        Pose2d initialPose = new Pose2d( -50,-50, Math.toRadians(229));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         arm arm = new arm(hardwareMap);
 
