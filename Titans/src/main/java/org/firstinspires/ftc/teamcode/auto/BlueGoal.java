@@ -61,12 +61,11 @@ public class BlueGoal extends LinearOpMode {
         // vision here that outputs position
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .strafeTo(new Vector2d(-47,-49));
+                .strafeTo(new Vector2d(-24,-24));
 
 
         TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-                .strafeToLinearHeading(new Vector2d(-52,-8),Math.toRadians(270));
-
+                .strafeToLinearHeading(new Vector2d(-63.4,-8),Math.toRadians(270));
 
         waitForStart();
 
@@ -74,15 +73,17 @@ public class BlueGoal extends LinearOpMode {
 
 
 
+
+
         Actions.runBlocking(
                 new SequentialAction(
-                        arm.Armdown()
+                        tab1.build()
                 )
         );
 
         Actions.runBlocking(
                 new SequentialAction(
-                        tab1.build()
+                        arm.Armdown()
                 )
         );
 

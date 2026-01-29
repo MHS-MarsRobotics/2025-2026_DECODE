@@ -54,7 +54,7 @@ public class RedFar extends LinearOpMode {
 
 
     public void runOpMode() {
-        Pose2d initialPose = new Pose2d( 59,12, Math.toRadians(180));
+        Pose2d initialPose = new Pose2d( 63,12, Math.toRadians(180));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         arm arm = new arm(hardwareMap);
 
@@ -62,12 +62,11 @@ public class RedFar extends LinearOpMode {
         int visionOutputPosition = 1;
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .splineTo(new Vector2d(-36, 36), Math.toRadians(135));
-
+                .strafeToLinearHeading(new Vector2d(47,12),Math.toRadians(180))
+                .splineTo(new Vector2d(-24, 24), Math.toRadians(135));
 
         TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-                .turnTo(Math.toRadians(270))
-                .lineToY(55);
+                .strafeToLinearHeading(new Vector2d(-63.4,8),Math.toRadians(90));
 
         waitForStart();
 
