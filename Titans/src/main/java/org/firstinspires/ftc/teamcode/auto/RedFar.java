@@ -11,6 +11,7 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -18,6 +19,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
+@Disabled
 @Config
 @Autonomous(name = "RedFar", group = "Autonomous")
 public class RedFar extends LinearOpMode {
@@ -26,7 +28,7 @@ public class RedFar extends LinearOpMode {
         private DcMotor arm;
 
         public arm(HardwareMap hardwareMap) {
-            arm = hardwareMap.get(DcMotorEx.class, "arm");
+            arm = hardwareMap.get(DcMotorEx.class, "launch");
             arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
 
@@ -37,7 +39,7 @@ public class RedFar extends LinearOpMode {
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
                     arm.setPower(-0.8);
-                    sleep(3000);
+                    sleep(1500);
                     arm.setPower(0);
                     initialized = true;
                 }
@@ -65,8 +67,9 @@ public class RedFar extends LinearOpMode {
                 .strafeToLinearHeading(new Vector2d(47,12),Math.toRadians(180))
                 .splineTo(new Vector2d(-24, 24), Math.toRadians(135));
 
-        TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-                .strafeToLinearHeading(new Vector2d(-63.4,8),Math.toRadians(90));
+        Action tab2 = tab1.endTrajectory().fresh()
+                .strafeToLinearHeading(new Vector2d(-63.4,8),Math.toRadians(90))
+                .build();
 
         waitForStart();
 
@@ -76,19 +79,9 @@ public class RedFar extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        tab1.build()
-                )
-        );
-
-        Actions.runBlocking(
-                new SequentialAction(
-                        arm.Armdown()
-                )
-        );
-
-        Actions.runBlocking(
-                new SequentialAction(
-                        tab2.build()
+                        tab1.build(),
+                        arm.Armdown(),
+                        tab2
                 )
         );
     }

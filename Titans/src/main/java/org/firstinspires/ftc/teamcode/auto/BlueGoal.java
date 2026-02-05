@@ -26,7 +26,7 @@ public class BlueGoal extends LinearOpMode {
         private DcMotor arm;
 
         public arm(HardwareMap hardwareMap) {
-            arm = hardwareMap.get(DcMotorEx.class, "arm");
+            arm = hardwareMap.get(DcMotorEx.class, "launch");
             arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
 
@@ -61,12 +61,12 @@ public class BlueGoal extends LinearOpMode {
         // vision here that outputs position
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .strafeTo(new Vector2d(-24,-24));
+                .strafeTo(new Vector2d(0,0));
 
 
-        TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-                .strafeToLinearHeading(new Vector2d(-63.4,-8),Math.toRadians(270));
-
+        Action tab2 = tab1.endTrajectory().fresh()
+                .strafeToLinearHeading(new Vector2d(-63.4,-8),Math.toRadians(270))
+                .build();
         waitForStart();
 
         if (isStopRequested()) return;
@@ -77,19 +77,9 @@ public class BlueGoal extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        tab1.build()
-                )
-        );
-
-        Actions.runBlocking(
-                new SequentialAction(
-                        arm.Armdown()
-                )
-        );
-
-        Actions.runBlocking(
-                new SequentialAction(
-                        tab2.build()
+                        tab1.build(),
+                        arm.Armdown(),
+                        tab2
                 )
         );
     }

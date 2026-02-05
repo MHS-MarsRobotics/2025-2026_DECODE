@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.tele;
 
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -9,22 +10,19 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 @TeleOp(name="Field Drive")
 public class Main_FieldCentricDrive extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
+        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
         DcMotor Motor_Front_Left = hardwareMap.dcMotor.get( "Motor Front Left"  );
         DcMotor Motor_Front_Right = hardwareMap.dcMotor.get("Motor Front Right" );
         DcMotor Motor_Back_Left = hardwareMap.dcMotor.get(  "Motor Back Left"   );
         DcMotor Motor_Back_Right = hardwareMap.dcMotor.get( "Motor Back Right"  );
-       // CRServo Cylinder  = hardwareMap.crservo.get("Cylinder");
         DcMotor Launcher  = hardwareMap.dcMotor.get("launch");
-
-
-        //Will they get it done in time
-
 
 
         Motor_Back_Left.setDirection(DcMotor.Direction.REVERSE);
@@ -100,6 +98,16 @@ public class Main_FieldCentricDrive extends LinearOpMode {
                 Launcher.setPower(0);
             }
 
+            Pose2d currentPose = drive.localizer.getPose();
+
+            // Optional: Telemetry
+            telemetry.addData("x", currentPose.position.x);
+            telemetry.addData("y", currentPose.position.y);
+
+            // Convert radians to degrees for easier reading
+            telemetry.addData("heading (deg)", Math.toDegrees(currentPose.heading.toDouble()));
+
+            telemetry.update();
 
         }
     }

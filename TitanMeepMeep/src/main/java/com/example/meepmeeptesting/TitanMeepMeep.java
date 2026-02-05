@@ -31,19 +31,17 @@ public class TitanMeepMeep {
        // Drive to Blue Goal
         myBotToBlueGoal.runAction(myBotToBlueGoal.getDrive().actionBuilder(new Pose2d(63, -12, Math.toRadians(0)))
                         .waitSeconds(1)
-                .strafeToLinearHeading(new Vector2d(47,-12),Math.toRadians(-180))
-                        .splineTo(new Vector2d(-24, -24 ), Math.toRadians(225))
+                .strafeToLinearHeading(new Vector2d(47,-0),Math.toRadians(210))
                         .waitSeconds(1)
-                        .strafeToLinearHeading(new Vector2d(-63.4,-8),Math.toRadians(270))
+                        .strafeToLinearHeading(new Vector2d(63.4,-34),Math.toRadians(270))
                 .build());
 
         // Drive to Red Goal
         myBotToRedGoal.runAction(myBotToRedGoal.getDrive().actionBuilder(new Pose2d(63, 12, Math.toRadians(0)))
                 .waitSeconds(1)
-                .strafeToLinearHeading(new Vector2d(47,12),Math.toRadians(180))
-                .splineTo(new Vector2d(-24, 24), Math.toRadians(135))
+                .strafeToLinearHeading(new Vector2d(47,0),Math.toRadians(150))
                 .waitSeconds(1)
-                .strafeToLinearHeading(new Vector2d(-63.4,8),Math.toRadians(90))
+                .strafeToLinearHeading(new Vector2d(63.4,34),Math.toRadians(90))
                 .build());
 
 
@@ -66,14 +64,14 @@ public class TitanMeepMeep {
         // Drive to Blue Goal
         TitanToBlueGoal.runAction(TitanToBlueGoal.getDrive().actionBuilder(new Pose2d(-50, -50, Math.toRadians(229)))
                 .waitSeconds(2)
-                .strafeTo(new Vector2d(-24,-24))
+                .strafeTo(new Vector2d(0,0))
                 .waitSeconds(1)
                 .strafeToLinearHeading(new Vector2d(-63.4,-8),Math.toRadians(270))
                 .build());
 
         TitanToRedGoal.runAction(TitanToRedGoal.getDrive().actionBuilder(new Pose2d(-50, 50, Math.toRadians(129)))
                 .waitSeconds(2)
-                .strafeTo(new Vector2d(-24,24))
+                .strafeTo(new Vector2d(0,0))
                 .waitSeconds(1)
                 .strafeToLinearHeading(new Vector2d(-63.4,8),Math.toRadians(90))
                 .build());

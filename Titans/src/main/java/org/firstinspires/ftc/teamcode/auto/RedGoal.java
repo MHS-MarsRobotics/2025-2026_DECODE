@@ -26,7 +26,7 @@ public class RedGoal extends LinearOpMode {
         private DcMotor arm;
 
         public arm(HardwareMap hardwareMap) {
-            arm = hardwareMap.get(DcMotorEx.class, "arm");
+            arm = hardwareMap.get(DcMotorEx.class, "launch");
             arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
 
@@ -37,7 +37,7 @@ public class RedGoal extends LinearOpMode {
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
                     arm.setPower(-0.8);
-                    sleep(1500);
+                    sleep(3000);
                     arm.setPower(0);
                     initialized = true;
                 }
@@ -61,11 +61,11 @@ public class RedGoal extends LinearOpMode {
         // vision here that outputs position
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .strafeTo(new Vector2d(-24,24));
+                .strafeTo(new Vector2d(0,0));
 
-        TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-                .strafeToLinearHeading(new Vector2d(-63.4,8),Math.toRadians(90));
-
+        Action tab2 = tab1.endTrajectory().fresh()
+                .strafeToLinearHeading(new Vector2d(-63.4,8),Math.toRadians(90))
+                .build();
 
         waitForStart();
 
@@ -76,20 +76,11 @@ public class RedGoal extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        tab1.build()
+                        tab1.build(),
+                        arm.Armdown(),
+                        tab2
                 )
         );
 
-        Actions.runBlocking(
-                new SequentialAction(
-                        arm.Armdown()
-                )
-        );
-
-        Actions.runBlocking(
-                new SequentialAction(
-                        tab2.build()
-                )
-        );
     }
 }
