@@ -37,7 +37,7 @@ public class BlueGoal extends LinearOpMode {
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
                     arm.setPower(-0.8);
-                    sleep(1500);
+                    sleep(3000);
                     arm.setPower(0);
                     initialized = true;
                 }
@@ -61,7 +61,7 @@ public class BlueGoal extends LinearOpMode {
         // vision here that outputs position
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .strafeTo(new Vector2d(0,0));
+                .strafeTo(new Vector2d(-20,-20));
 
 
         Action tab2 = tab1.endTrajectory().fresh()

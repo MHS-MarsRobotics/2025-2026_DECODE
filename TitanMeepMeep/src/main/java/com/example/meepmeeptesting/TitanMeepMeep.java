@@ -64,14 +64,14 @@ public class TitanMeepMeep {
         // Drive to Blue Goal
         TitanToBlueGoal.runAction(TitanToBlueGoal.getDrive().actionBuilder(new Pose2d(-50, -50, Math.toRadians(229)))
                 .waitSeconds(2)
-                .strafeTo(new Vector2d(0,0))
+                .strafeTo(new Vector2d(-20,-20))
                 .waitSeconds(1)
                 .strafeToLinearHeading(new Vector2d(-63.4,-8),Math.toRadians(270))
                 .build());
 
         TitanToRedGoal.runAction(TitanToRedGoal.getDrive().actionBuilder(new Pose2d(-50, 50, Math.toRadians(129)))
                 .waitSeconds(2)
-                .strafeTo(new Vector2d(0,0))
+                .strafeTo(new Vector2d(-20,20))
                 .waitSeconds(1)
                 .strafeToLinearHeading(new Vector2d(-63.4,8),Math.toRadians(90))
                 .build());

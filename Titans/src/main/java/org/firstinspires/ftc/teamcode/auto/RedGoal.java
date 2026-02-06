@@ -61,7 +61,7 @@ public class RedGoal extends LinearOpMode {
         // vision here that outputs position
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .strafeTo(new Vector2d(0,0));
+                .strafeTo(new Vector2d(-20,20));
 
         Action tab2 = tab1.endTrajectory().fresh()
                 .strafeToLinearHeading(new Vector2d(-63.4,8),Math.toRadians(90))
